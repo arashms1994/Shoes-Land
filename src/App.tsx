@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import Loading from "./modules/onboarding/Loading/Loading"
 
 
 function App() {
@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-   
+
     </>
   )
 }
