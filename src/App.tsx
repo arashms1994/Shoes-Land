@@ -1,10 +1,12 @@
-import Loading from "./modules/onboarding/Loading/Loading";
-import Welcome from "./modules/onboarding/Welcome/Welcome";
+
+import OnBoarding from "./pages/onboarding/OnBoarding";
+
+
 
 function App() {
   return (
     <>
-      <Welcome />
+      <OnBoarding />
     </>
   );
 }
