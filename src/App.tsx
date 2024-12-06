@@ -1,14 +1,14 @@
-import { useState } from 'react'
+
+import OnBoarding from "./pages/onboarding/OnBoarding";
+
 
 
 function App() {
-
-
   return (
     <>
-   
+      <OnBoarding />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
