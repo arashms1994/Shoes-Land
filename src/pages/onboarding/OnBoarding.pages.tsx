@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
-import Loading from "../../modules/onboarding/Loading/Loading";
-import Slider from "../../modules/onboarding/Slider/Slider";
-import Welcome from "../../modules/onboarding/Welcome/Welcome";
+import Loading from "../../modules/onboarding/Loading/Loading.modules";
+import Slider from "../../modules/onboarding/Slider/Slider.modules";
+import Welcome from "../../modules/onboarding/Welcome/Welcome.modules";
 
 const OnBoarding = () => {
   const [page, setPage] = useState(0);

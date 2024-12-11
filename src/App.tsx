@@ -1,5 +1,5 @@
 
-import OnBoarding from "./pages/onboarding/OnBoarding";
+import OnBoarding from "./pages/onboarding/OnBoarding.pages";
 
 
 
