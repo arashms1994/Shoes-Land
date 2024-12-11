@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 const Login = () => {
   const navigate = useNavigate();
 
-  //=========== UseStates ============
+  //=========== UseStates ============ 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -20,17 +20,42 @@ const Login = () => {
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
 
+  // State for tracking the number of failed attempts and lock time
+  const [failedAttempts, setFailedAttempts] = useState(0);
+  const [lockTime, setLockTime] = useState<number | null>(null);  // timestamp of when lock starts
+
   // =========== UseEffect ========
   useEffect(() => {
     const btn = document.getElementById("btn");
-    if (formData.email.length > 0 && formData.password.length > 0) {
+    if (formData.email.length > 0 && formData.password.length > 0 && failedAttempts < 5) {
       btn?.classList.remove("opacity-50", "cursor-not-allowed");
     } else {
       btn?.classList.add("opacity-50", "cursor-not-allowed");
     }
+
+    // Checking lock status
+    const lockTimeFromStorage = localStorage.getItem("lockTime");
+    const attemptsFromStorage = parseInt(localStorage.getItem("failedAttempts") || "0");
+
+    if (lockTimeFromStorage) {
+      const lockTimestamp = parseInt(lockTimeFromStorage);
+      const currentTime = Date.now();
+      if (currentTime - lockTimestamp < 5 * 60 * 1000) {
+        // Locking user for 5 minutes
+        setLockTime(lockTimestamp);
+      } else {
+        // Unlock the user after 5 minutes
+        localStorage.removeItem("lockTime");
+        localStorage.removeItem("failedAttempts");
+        setLockTime(null);
+        setFailedAttempts(0);
+      }
+    } else {
+      setFailedAttempts(attemptsFromStorage);
+    }
   }, [formData]);
 
-  // =========== hndle Fns =========
+  // =========== Handle Functions =========
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -39,14 +64,31 @@ const Login = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const result = LoginSchema.safeParse(formData);
+    if (failedAttempts >= 5 && lockTime !== null) {
+      alert("Your account is locked. Please try again after 5 minutes.");
+      return;
+    }
 
+    const result = LoginSchema.safeParse(formData);
+    
     if (!result.success) {
       const fieldErrors: any = {};
       result.error.errors.forEach((error) => {
         fieldErrors[error.path[0]] = error.message;
       });
       setErrors(fieldErrors);
+
+      // Increment failed attempts
+      const newFailedAttempts = failedAttempts + 1;
+      setFailedAttempts(newFailedAttempts);
+      localStorage.setItem("failedAttempts", newFailedAttempts.toString());
+
+      // Lock the account after 5 failed attempts
+      if (newFailedAttempts >= 5) {
+        const currentTime = Date.now();
+        localStorage.setItem("lockTime", currentTime.toString());
+        setLockTime(currentTime);
+      }
     } else {
       console.log("Form Data: ", result.data);
     }
@@ -93,6 +135,7 @@ const Login = () => {
               className="w-full pl-1 bg-transparent h-full py-2 outline-none"
               placeholder="Email"
               autoComplete="email"
+              disabled={failedAttempts >= 5}
             />
           </div>
           {errors.email && (
@@ -117,6 +160,7 @@ const Login = () => {
               className="w-full px-1 bg-transparent h-full py-2 outline-none"
               placeholder="Password"
               autoComplete="current-password"
+              disabled={failedAttempts >= 5}
             />
             <img
               src={`/src/assets/svg/${showPassword ? "eye-slash" : "eye"}.svg`}
