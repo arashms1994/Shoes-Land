@@ -11,18 +11,14 @@ const Login = () => {
     email: "",
     password: "",
   });
-
   const [errors, setErrors] = useState({
     email: "",
     password: "",
   });
-
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
-
-  // State for tracking the number of failed attempts and lock time
   const [failedAttempts, setFailedAttempts] = useState(0);
-  const [lockTime, setLockTime] = useState<number | null>(null);  // timestamp of when lock starts
+  const [lockTime, setLockTime] = useState<number | null>(null);
 
   // =========== UseEffect ========
   useEffect(() => {
@@ -33,7 +29,6 @@ const Login = () => {
       btn?.classList.add("opacity-50", "cursor-not-allowed");
     }
 
-    // Checking lock status
     const lockTimeFromStorage = localStorage.getItem("lockTime");
     const attemptsFromStorage = parseInt(localStorage.getItem("failedAttempts") || "0");
 
@@ -41,10 +36,10 @@ const Login = () => {
       const lockTimestamp = parseInt(lockTimeFromStorage);
       const currentTime = Date.now();
       if (currentTime - lockTimestamp < 5 * 60 * 1000) {
-        // Locking user for 5 minutes
+
         setLockTime(lockTimestamp);
       } else {
-        // Unlock the user after 5 minutes
+
         localStorage.removeItem("lockTime");
         localStorage.removeItem("failedAttempts");
         setLockTime(null);
@@ -78,12 +73,10 @@ const Login = () => {
       });
       setErrors(fieldErrors);
 
-      // Increment failed attempts
       const newFailedAttempts = failedAttempts + 1;
       setFailedAttempts(newFailedAttempts);
       localStorage.setItem("failedAttempts", newFailedAttempts.toString());
 
-      // Lock the account after 5 failed attempts
       if (newFailedAttempts >= 5) {
         const currentTime = Date.now();
         localStorage.setItem("lockTime", currentTime.toString());
@@ -100,6 +93,7 @@ const Login = () => {
         <Back address="/" />
 
         {/* ======= logo and title ========= */}
+
         <div className="w-14 h-20">
           <img
             src="/src/assets/svg/logo-black.svg"
