@@ -8,7 +8,7 @@ const RouterPage: React.FC = () => {
     <Router>
       <Routes>
         <Route path="/" element={<OnBoarding />} />
-        <Route path="/Login" element={<Login />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
   );
