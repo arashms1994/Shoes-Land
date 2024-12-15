@@ -1,12 +1,11 @@
-
-import OnBoarding from "./pages/onboarding/OnBoarding";
+import RouterPage from "./router/Router";
 
 
 
 function App() {
   return (
     <>
-      <OnBoarding />
+      <RouterPage />
     </>
   );
 }

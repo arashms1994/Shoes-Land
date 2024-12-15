@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Slide1 from "../Slides/Slide1";
-import Slide2 from "../Slides/Slide2";
-import Slide3 from "../Slides/Slide3";
+import Slide1 from "../Slides/Slide1.modules";
+import Slide2 from "../Slides/Slide2.modules";
+import Slide3 from "../Slides/Slide3.modules";
 
 const Slider = () => {
   const [page, setPage] = useState(0);
