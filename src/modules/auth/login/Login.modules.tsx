@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 const Login = () => {
   const navigate = useNavigate();
 
-  //=========== UseStates ============ 
+  //=========== UseStates ============
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -23,23 +23,27 @@ const Login = () => {
   // =========== UseEffect ========
   useEffect(() => {
     const btn = document.getElementById("btn");
-    if (formData.email.length > 0 && formData.password.length > 0 && failedAttempts < 5) {
+    if (
+      formData.email.length > 0 &&
+      formData.password.length > 0 &&
+      failedAttempts < 5
+    ) {
       btn?.classList.remove("opacity-50", "cursor-not-allowed");
     } else {
       btn?.classList.add("opacity-50", "cursor-not-allowed");
     }
 
     const lockTimeFromStorage = localStorage.getItem("lockTime");
-    const attemptsFromStorage = parseInt(localStorage.getItem("failedAttempts") || "0");
+    const attemptsFromStorage = parseInt(
+      localStorage.getItem("failedAttempts") || "0"
+    );
 
     if (lockTimeFromStorage) {
       const lockTimestamp = parseInt(lockTimeFromStorage);
       const currentTime = Date.now();
       if (currentTime - lockTimestamp < 5 * 60 * 1000) {
-
         setLockTime(lockTimestamp);
       } else {
-
         localStorage.removeItem("lockTime");
         localStorage.removeItem("failedAttempts");
         setLockTime(null);
@@ -65,7 +69,7 @@ const Login = () => {
     }
 
     const result = LoginSchema.safeParse(formData);
-    
+
     if (!result.success) {
       const fieldErrors: any = {};
       result.error.errors.forEach((error) => {
@@ -189,6 +193,7 @@ const Login = () => {
 
           <button
             type="submit"
+            onClick={() => navigate("/home")}
             id="btn"
             className="bg-[#212529] rounded-full w-96 h-12 text-white font-medium text-sm mt-64 opacity-50 cursor-not-allowed"
           >
