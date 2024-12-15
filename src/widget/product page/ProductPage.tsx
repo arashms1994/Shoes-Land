@@ -1,10 +1,9 @@
-
-import { useParams } from "react-router-dom"; // برای گرفتن id از URL
+import { useParams } from "react-router-dom";
 import { useProduct } from "../../api/Query";
 
 
 const ProductPage = () => {
-  const { id } = useParams<{ id: string }>(); // دریافت id از URL
+  const { id } = useParams<{ id: string }>();
   const { product, isErrorProduct, isLoadingProduct } = useProduct(Number(id));
 
   if (isLoadingProduct) return <div>Loading...</div>;

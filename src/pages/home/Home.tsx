@@ -1,10 +1,14 @@
-import React from 'react'
-import ProductsContainer from '../../components/product-container/ProductsContainer'
+import React from "react";
+import ProductsContainer from "../../components/product-container/ProductsContainer";
+import Footer from "../../layout/footer/footer";
 
 const Home = () => {
   return (
-    <ProductsContainer />
-  )
-}
+    <div>
+      <ProductsContainer />
+      <Footer />
+    </div>
+  );
+};
 
-export default Home
+export default Home;

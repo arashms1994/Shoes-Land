@@ -10,6 +10,6 @@ export async function getProducts(params?: { id: number }) {
 }
 
 export async function getProductById(id: number) {
-  const res = await Api.get<Product>("/products" + id);
+  const res = await Api.get<Product>("/products/" + id);
   return res.data;
 }
