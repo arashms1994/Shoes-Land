@@ -1,8 +1,16 @@
 import { useProducts } from "../../api/Query";
+import { Product } from "../../types/type";
 import ProductCard from "../../widget/product card/ProductCard.widget";
 
-const ProductsContainer = () => {
-  const { products, isLoadingProducts, isErrorProducts } = useProducts();
+interface Props {
+  products?: Product[];
+}
+
+const ProductsContainer = ({ products: propProducts }: Props) => {
+
+  const { products: apiProducts, isLoadingProducts, isErrorProducts } = useProducts();
+
+  const products = propProducts || apiProducts;
 
   if (isLoadingProducts) return <div>Loading...</div>;
   if (isErrorProducts) return <div>Error loading products.</div>;

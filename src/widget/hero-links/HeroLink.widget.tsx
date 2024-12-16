@@ -8,7 +8,7 @@ interface Props {
 const HeroLink = ({ brand }: Props) => {
   return (
     <Link
-      to={`/Home${brand.href}`}
+      to={`/home${brand.href}`}
       className="flex flex-col items-center justify-center gap-3"
     >
       <div className="bg-[#ECECEC] w-[60px] h-[60px] flex items-center justify-center text-center rounded-full">
