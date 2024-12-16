@@ -1,5 +1,5 @@
 import { useProducts } from "../../api/Query";
-import ProductCard from "../../widget/product card/ProductCard";
+import ProductCard from "../../widget/product card/ProductCard.widget";
 
 const ProductsContainer = () => {
   const { products, isLoadingProducts, isErrorProducts } = useProducts();
